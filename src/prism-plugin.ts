@@ -5,6 +5,7 @@ import {
 import { Plugin, PluginKey } from 'prosemirror-state';
 import { Decoration, DecorationSet } from 'prosemirror-view';
 import Prism from 'prismjs';
+
 import { fromHtml } from 'hast-util-from-html';
 
 import 'prismjs/components/prism-jsx';
@@ -65,8 +66,8 @@ function getDecorations({
             }
             html = Prism.highlight(block.node.textContent, Prism.languages[language], language);
           }
-          catch(er: any){
-            console.log(er.message+": \""+language+"\"");
+          catch(err: any){
+            console.error(err.message+": \""+language+"\"");
             html = Prism.highlight(block.node.textContent, Prism.languages.javascript, 'js');
           }    
 
@@ -79,8 +80,6 @@ function getDecorations({
                 const decoration = Decoration.inline(from, to, {
                     class: node.classes.join(' '),
                 });
-
-                console.log(node.text, from, to);
 
                 decorations.push(decoration);
             }
@@ -107,7 +106,7 @@ export function PrismPlugin({
         );
     }
 
-    const lowlightPlugin: Plugin<any> = new Plugin({
+    const prismjsPlugin: Plugin<any> = new Plugin({
         key: new PluginKey('prism'),
 
         state: {
@@ -171,10 +170,10 @@ export function PrismPlugin({
 
         props: {
             decorations(state) {
-                return lowlightPlugin.getState(state);
+                return prismjsPlugin.getState(state);
             },
         },
     });
 
-    return lowlightPlugin;
+    return prismjsPlugin;
 }
