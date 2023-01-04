@@ -1,7 +1,7 @@
 {
   "name": "tiptap-extension-code-block-prism",
   "description": "code block extension for tiptap",
-  "version": "0.0.2d",
+  "version": "0.0.2e",
   "homepage": "https://tiptap.dev",
   "type": "module",
   "author": "DepressingUtopian",
